@@ -44,8 +44,16 @@ export function LoginForm() {
       setChallengeId(challenge.id);
       setStage("mfa");
     } catch (cause) {
-      await supabase.auth.signOut();
-      setError(cause instanceof Error ? cause.message : "Connexion indisponible.");
+      let cleanupFailed = false;
+      try {
+        const { error: signOutError } = await supabase.auth.signOut();
+        cleanupFailed = Boolean(signOutError);
+      } catch {
+        cleanupFailed = true;
+      }
+      setError(cleanupFailed
+        ? "La session partielle n’a pas pu être fermée. Réessayez avant de poursuivre."
+        : cause instanceof Error ? cause.message : "Connexion indisponible.");
     } finally {
       setBusy(false);
     }
