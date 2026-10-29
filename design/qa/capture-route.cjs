@@ -44,7 +44,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const audit = await send("Runtime.evaluate", {
     returnByValue: true,
-    expression: `JSON.stringify({title: document.querySelector("h1")?.textContent?.trim() ?? "", viewportWidth: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth, hasUnavailableState: /(?:Données .{0,48} indisponibles|Aucun(?:e)? .{0,48}(?:disponible|à afficher)|Résultats de recherche indisponibles)/i.test(document.body.innerText), numericDefaults: [...document.querySelectorAll('input[type="number"]')].map((input) => input.value)})`,
+    expression: `JSON.stringify({title: document.querySelector("h1")?.textContent?.trim() ?? "", viewportWidth: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth, hasUnavailableState: /(?:Données .{0,48} indisponibles|Aucun(?:e)? .{0,80}|Résultats de recherche indisponibles)/i.test(document.body.innerText), numericDefaults: [...document.querySelectorAll('input[type="number"]')].map((input) => input.value)})`,
   });
   const result = JSON.parse(audit.result.value);
   if (!result.title) throw new Error(`No page title rendered at ${route}.`);
