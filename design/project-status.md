@@ -49,3 +49,5 @@ MF-02 : le champ TOTP est limité à six chiffres et n’accepte que des chiffre
 
 
 Revue MF-14 (29 octobre 2026) : titre et sous-titre aligns sur la reference; titre de panneau redondant retire et filtre secondaire libelle Trier par. La creation reste accessible depuis la navigation. Captures admin-plans-1440x1000.png et admin-plans-390x844.png. Chrome confirme un catalogue sans plan fictif, sans debordement horizontal de page aux deux largeurs; la table garde son defilement horizontal interne sur mobile. Comparaison proposee, non verrouillee.
+
+Revue MF-16 (29 octobre 2026) : sous-titre, recherche et casse des colonnes rapproches de la reference. Les captures desktop/mobile montrent une liste sans souscription fictive; les montants sont identifies en HTG. Chrome confirme l'absence de debordement horizontal de page a 1440 px et 390 px. Comparaison MF-01 a MF-34 regeneree; MF-02 attend une session MFA reelle.
