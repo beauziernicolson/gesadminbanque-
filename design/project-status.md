@@ -65,3 +65,5 @@ Revue MF-21 (29 octobre 2026) : titre/sous-titre, recherche, filtres et colonnes
 Revue MF-22 (29 octobre 2026) : titre/sous-titre, recherche, filtres et colonnes alignes sur la reference. Aucun incident inexistant, alerte, severite, entite ni analyste inventes; le filtre est neutre. Captures desktop/mobile confirment l'etat vide et aucune largeur de page superieure au viewport (1440/390 px).
 
 Revue MF-23 (29 octobre 2026) : retour avant titre, huit panneaux sur severite, description, operation, preuves, enqueteur, chronologie, notes et resolution. Actions escalader/cloturer desactivees; aucun contenu d'incident, date, preuve ou personne fictif. Captures desktop/mobile confirment l'etat indisponible et aucune largeur de page superieure au viewport (1440/390 px).
+
+Revue MF-24 (29 octobre 2026) : titre, sous-titre, recherche, filtres et colonnes aligns sur la reference; le titre Liste des tickets partage la barre de recherche/filtres. Aucun ticket, identite, priorite, statut ou date fictif. Captures desktop/mobile confirment l'etat vide et aucune largeur de page superieure au viewport (1440/390 px).

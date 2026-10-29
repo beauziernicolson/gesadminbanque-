@@ -163,3 +163,5 @@ Captures MF-21 : admin-financements-1440x1000.png et admin-financements-390x844.
 Captures MF-22 : admin-risques-1440x1000.png et admin-risques-390x844.png. Aucun risque ou analyste fictif; les filtres restent desactives sans source autorisee.
 
 Captures MF-23 : admin-risques-incident-1440x1000.png et admin-risques-incident-390x844.png. Les donnees d'incident restent indisponibles; notes, escalade et cloture ne permettent aucune saisie ou action sans dossier reel.
+
+Captures MF-24 : admin-support-1440x1000.png et admin-support-390x844.png. Aucun ticket de demonstration, identite ou message; les filtres restent neutres sans source GES autorisee.
