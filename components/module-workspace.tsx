@@ -47,6 +47,16 @@ function DistributionValueCard({ label, icon }: { label: string; icon: string })
 export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionKey: string; query: string; onQueryChange: (value: string) => void }) {
   const [activeTab, setActiveTab] = useState(0);
   const page = pages[sectionKey];
+  if (sectionKey === "documents") return <>
+    <section className="panel communications-panel">
+      <div className="communications-header"><h2>Documents</h2><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label="Rechercher un document" placeholder="Rechercher un document…" value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><button className="filter-button" disabled>Tous les types <span>⌄</span></button></div>
+      <div className="communications-empty"><div className="communications-empty-icon"><Image src="/assets/icons/document.webp" alt="" width={32} height={32}/></div><h3>{query.trim() ? "Résultats de recherche indisponibles" : "Aucun document disponible"}</h3><p>{query.trim() ? "Aucune source GES autorisée n’a fourni de documents à filtrer." : "Les documents apparaîtront ici lorsqu’ils seront disponibles."}</p></div>
+    </section>
+    <section className="panel communications-panel">
+      <div className="communications-header"><h2>Notifications</h2><button className="filter-button" disabled>Toutes les notifications <span>⌄</span></button></div>
+      <div className="communications-empty"><div className="communications-empty-icon"><Image src="/assets/icons/notification.webp" alt="" width={32} height={32}/></div><h3>Aucune notification disponible</h3><p>Les notifications apparaîtront ici lorsqu’elles seront disponibles.</p></div>
+    </section>
+  </>;
   if (sectionKey === "tresorerie") return <>
     <div className="module-notice">Valeurs initiales — les données réelles restent à confirmer. Aucun montant affiché ici ne constitue un solde vérifié.</div>
     <div className="metric-grid treasury-metrics"><InitialValueCard label="Disponible"/><InitialValueCard label="Réservé"/><InitialValueCard label="Entrées"/><InitialValueCard label="Sorties"/></div>

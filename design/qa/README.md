@@ -166,3 +166,4 @@ Captures MF-23 : admin-risques-incident-1440x1000.png et admin-risques-incident-
 
 Captures MF-24 : admin-support-1440x1000.png et admin-support-390x844.png. Aucun ticket de demonstration, identite ou message; les filtres restent neutres sans source GES autorisee.
 Captures MF-25 : admin-support-conversation-1440x1000.png et admin-support-conversation-390x844.png. La conversation vide indique clairement les tickets et details indisponibles; reponse desactivee sans conversation et autorisation confirmees. Aucun identifiant, message, statut, date ou montant fictif.
+Captures MF-26 : admin-documents-notifications-1440x1000.png et admin-documents-notifications-390x844.png. La route Documents presente les deux panneaux de la reference; recherche documentaire active, filtre de type et filtre de notifications inactifs faute de source GES. Aucun fichier, notification, identite, date ou montant fictif.
