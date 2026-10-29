@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { InterfaceStateGallery } from "@/components/interface-state-gallery";
 
 type ModulePage = {
   columns: string[];
@@ -48,6 +49,7 @@ function DistributionValueCard({ label, icon }: { label: string; icon: string })
 export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionKey: string; query: string; onQueryChange: (value: string) => void }) {
   const [activeTab, setActiveTab] = useState(0);
   const page = pages[sectionKey];
+  if (sectionKey === "etats-interface") return <InterfaceStateGallery/>;
   if (sectionKey === "documents") return <>
     <section className="panel communications-panel">
       <div className="communications-header"><h2>Documents</h2><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label="Rechercher un document" placeholder="Rechercher un document…" value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><button className="filter-button" disabled>Tous les types <span>⌄</span></button></div>
