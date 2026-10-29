@@ -151,3 +151,5 @@ Captures MF-16 : admin-souscriptions-1440x1000.png et admin-souscriptions-390x84
 Captures MF-17 mises a jour : admin-souscriptions-dossier-1440x1000.png et admin-souscriptions-dossier-390x844.png. Le retour precede le titre; huit panneaux restent indisponibles sans souscription reelle et les actions sont inactives. Aucun engagement ni montant fictif.
 
 Captures MF-18 : admin-contrats-1440x1000.png et admin-contrats-390x844.png. Le registre est vide, le principal est libelle en HTG et les filtres de statut, plan et periode restent inactifs sans source de donnees.
+
+Captures MF-19 : admin-contrats-dossier-1440x1000.png et admin-contrats-dossier-390x844.png. Les termes, montants, dates, restrictions, documents et evenements restent indisponibles sans contrat selectionne; aucun chiffre fictif n'est affiche.

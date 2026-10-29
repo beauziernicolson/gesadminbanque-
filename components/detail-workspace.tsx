@@ -39,9 +39,22 @@ export function DetailWorkspace({ sectionKey }: { sectionKey: string }) {
     <section className="panel subscription-actions-panel"><h2>Actions suivantes autorisées</h2><div className="subscription-actions-empty"><Image src="/assets/icons/security.webp" alt="" width={34} height={34}/><strong>Actions indisponibles sans souscription réelle et autorisation confirmées.</strong><p>Veuillez sélectionner une souscription existante et confirmer l’autorisation pour activer les actions.</p></div></section>
   </>;
   if (sectionKey === "contrats/dossier") return <>
-    <BackLink href="/admin/contrats" label="Retour aux contrats"/>
-    <Unavailable title="Conditions financières versionnées" description="Aucun contrat sélectionné; aucun terme financier n’est affiché."/>
-    <div className="module-detail-grid">{["Capital initial (HTG)", "Taux applicable", "Date de début", "Durée", "Prochaine échéance", "Intérêts courus", "Intérêts à payer", "Intérêts versés", "Restrictions sur le capital", "Documents du contrat", "Événements du contrat"].map((title) => <Unavailable key={title} title={title}/>)}</div>
+    <section className="panel contract-terms-card"><h2>Conditions financières versionnées</h2><div className="contract-terms-state"><div className="detail-data-icon"><Image src="/assets/icons/document.webp" alt="" width={30} height={30}/></div><strong>Données indisponibles</strong><p>Les conditions financières du contrat seront affichées ici lorsqu’un contrat sera sélectionné.</p></div></section>
+    <div className="contract-value-grid">{[
+      ["Capital initial (HTG)", "wallet", "Le capital initial du contrat sera affiché ici lorsqu’un contrat sera sélectionné."],
+      ["Taux applicable", "analytics", "Le taux applicable sera affiché ici lorsqu’un contrat sera sélectionné."],
+      ["Date de début", "calendar", "La date de début sera affichée ici lorsqu’un contrat sera sélectionné."],
+      ["Durée", "calendar", "La durée du contrat sera affichée ici lorsqu’un contrat sera sélectionné."],
+      ["Prochaine échéance", "calendar", "La prochaine échéance sera affichée ici lorsqu’un contrat sera sélectionné."],
+      ["Intérêts courus", "interest", "Les intérêts courus seront affichés ici lorsqu’un contrat sera sélectionné."],
+      ["Intérêts à payer", "investment", "Les intérêts à payer seront affichés ici lorsqu’un contrat sera sélectionné."],
+      ["Intérêts versés", "analytics", "Les intérêts versés seront affichés ici lorsqu’un contrat sera sélectionné."],
+    ].map(([title, icon, description]) => <article className="panel contract-value-card" key={title}><div className="contract-value-head"><div className="contract-value-icon"><Image src={`/assets/icons/${icon}.webp`} alt="" width={30} height={30}/></div><h2>{title}</h2></div><div className="contract-value-state"><strong>Données indisponibles</strong><p>{description}</p></div></article>)}</div>
+    <div className="contract-secondary-grid">{[
+      ["Restrictions sur le capital", "security", "Les restrictions sur le capital seront affichées ici lorsqu’un contrat sera sélectionné."],
+      ["Documents du contrat", "document", "Les documents du contrat apparaîtront ici lorsqu’un contrat sera sélectionné."],
+    ].map(([title, icon, description]) => <article className="panel contract-secondary-card" key={title}><h2>{title}</h2><div className="contract-secondary-state"><div className="detail-data-icon"><Image src={`/assets/icons/${icon}.webp`} alt="" width={30} height={30}/></div><strong>{title.startsWith("Documents") ? "Aucun document disponible" : "Données indisponibles"}</strong><p>{description}</p></div></article>)}</div>
+    <section className="panel contract-events-card"><h2>Événements du contrat</h2><div className="contract-event-state"><div className="detail-data-icon"><Image src="/assets/icons/ledger.webp" alt="" width={30} height={30}/></div><div><strong>Données indisponibles</strong><p>Les événements du contrat seront affichés ici lorsqu’un contrat sera sélectionné.</p></div></div></section>
   </>;
   if (sectionKey === "risques/incident") return <>
     <BackLink href="/admin/risques" label="Retour aux alertes"/>
