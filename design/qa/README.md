@@ -143,4 +143,5 @@ Révision MF-10 du 29 octobre : le panneau de liste ne répète plus le titre et
 
 Reverification MF-15 du 29 octobre : états desktop replié (1440 × 1100), ouvert (1440 × 1350) et mobile pleine page (390 × 1367) capturés. Comparaisons desktop `comparison-mf15-default.png` et `comparison-mf15-open.png`; comparaison mobile `frame-review/MF-15-mobile-fullpage-comparison.png`. Le navigateur confirme HTG, six valeurs numériques à zéro, saisies textuelles vides, exactement deux actions visibles et désactivées, et les quatre panneaux dans l’état attendu. Pas de débordement horizontal; shell et typographie conservent des écarts visuels, les références restent proposées.
 
-Revue MF-14 : les captures dmin-plans-1440x1000.png et dmin-plans-390x844.png couvrent le catalogue vide. Le bouton « Nouveau plan » se trouve dans l’en-tête, aucun plan fictif n’est affiché, et Chrome DevTools confirme l’absence de débordement de page aux deux largeurs. Sur 390 px, le tableau possède un défilement horizontal interne.
+
+Revue MF-14 : les captures admin-plans-1440x1000.png et admin-plans-390x844.png couvrent le catalogue vide. Le filtre secondaire est Trier par, aucun plan fictif n'est affiche, et Chrome DevTools confirme l'absence de debordement de page aux deux largeurs. Sur 390 px, le tableau possede un defilement horizontal interne.
