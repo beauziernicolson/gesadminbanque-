@@ -61,3 +61,5 @@ Revue MF-19 (29 octobre 2026) : retour avant le titre; conditions versionnees, h
 Revue MF-20 (29 octobre 2026) : calendrier sans jour numerote ni date fictive, controles de periode desactives, liste des echeances distincte et etat vide clarifie. Capital a distribuer et interets a distribuer restent a 0 HTG, marques comme valeurs initiales a confirmer. Chrome confirme l'etat vide et aucune largeur de page superieure au viewport (1440/390 px).
 
 Revue MF-21 (29 octobre 2026) : titre/sous-titre, recherche, filtres et colonnes aligns sur la reference corrigee v2; Financements reste l'item actif. Liste vide sans projet, personne, somme, risque ni statut fictif; le montant propose est libelle HTG. Captures desktop/mobile confirment l'etat vide et aucune largeur de page superieure au viewport (1440/390 px).
+
+Revue MF-22 (29 octobre 2026) : titre/sous-titre, recherche, filtres et colonnes alignes sur la reference. Aucun incident inexistant, alerte, severite, entite ni analyste inventes; le filtre est neutre. Captures desktop/mobile confirment l'etat vide et aucune largeur de page superieure au viewport (1440/390 px).
