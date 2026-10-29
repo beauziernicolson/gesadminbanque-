@@ -147,3 +147,5 @@ Reverification MF-15 du 29 octobre : états desktop replié (1440 × 1100), ouve
 Revue MF-14 : les captures admin-plans-1440x1000.png et admin-plans-390x844.png couvrent le catalogue vide. Le filtre secondaire est Trier par, aucun plan fictif n'est affiche, et Chrome DevTools confirme l'absence de debordement de page aux deux largeurs. Sur 390 px, le tableau possede un defilement horizontal interne.
 
 Captures MF-16 : admin-souscriptions-1440x1000.png et admin-souscriptions-390x844.png. La liste reste vide tant qu'aucune source GES autorisee ne fournit les donnees; les montants sont libelles en HTG. Les neuf planches MF-01 a MF-34 ont ete regenerees apres les changements de MF-14/MF-16.
+
+Captures MF-17 mises a jour : admin-souscriptions-dossier-1440x1000.png et admin-souscriptions-dossier-390x844.png. Le retour precede le titre; huit panneaux restent indisponibles sans souscription reelle et les actions sont inactives. Aucun engagement ni montant fictif.

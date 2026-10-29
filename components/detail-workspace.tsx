@@ -31,9 +31,12 @@ export function DetailWorkspace({ sectionKey }: { sectionKey: string }) {
     <div className="module-two-panels"><Unavailable title="Historique de traitement"/><Unavailable title="Journal d’audit"/></div>
   </>;
   if (sectionKey === "souscriptions/dossier") return <>
-    <BackLink href="/admin/souscriptions" label="Retour aux souscriptions"/>
-    <div className="module-detail-grid">{["Membre", "Plan sélectionné", "Engagement financier (HTG)", "Vérification du financement", "Prérequis KYC", "État du contrat", "Étapes de traitement", "Documents justificatifs"].map((title) => <Unavailable key={title} title={title}/>)}</div>
-    <div className="detail-actions"><button disabled>Actions indisponibles</button><span>Une souscription et une autorisation confirmées sont requises.</span></div>
+    <div className="module-detail-grid subscription-detail-grid">{[
+      ["Membre", "members"], ["Plan sélectionné", "plan"], ["Engagement financier (HTG)", "investment"],
+      ["Vérification du financement", "risk"], ["Prérequis KYC", "identity"], ["État du contrat", "contract"],
+      ["Étapes du traitement", "subscription"], ["Documents justificatifs", "document"],
+    ].map(([title, icon]) => <article className="panel detail-data-card" key={title}><h2>{title}</h2><div className="subscription-detail-state"><div className="detail-data-icon"><Image src={`/assets/icons/${icon}.webp`} alt="" width={28} height={28}/></div><strong>{title === "Documents justificatifs" ? "Aucun document disponible" : "Données indisponibles"}</strong><p>Aucune souscription sélectionnée.</p></div></article>)}</div>
+    <section className="panel subscription-actions-panel"><h2>Actions suivantes autorisées</h2><div className="subscription-actions-empty"><Image src="/assets/icons/security.webp" alt="" width={34} height={34}/><strong>Actions indisponibles sans souscription réelle et autorisation confirmées.</strong><p>Veuillez sélectionner une souscription existante et confirmer l’autorisation pour activer les actions.</p></div></section>
   </>;
   if (sectionKey === "contrats/dossier") return <>
     <BackLink href="/admin/contrats" label="Retour aux contrats"/>
