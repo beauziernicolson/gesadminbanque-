@@ -57,15 +57,28 @@ export function DetailWorkspace({ sectionKey }: { sectionKey: string }) {
     <section className="panel contract-events-card"><h2>Événements du contrat</h2><div className="contract-event-state"><div className="detail-data-icon"><Image src="/assets/icons/ledger.webp" alt="" width={30} height={30}/></div><div><strong>Données indisponibles</strong><p>Les événements du contrat seront affichés ici lorsqu’un contrat sera sélectionné.</p></div></div></section>
   </>;
   if (sectionKey === "risques/incident") return <>
-    <BackLink href="/admin/risques" label="Retour aux alertes"/>
-    <div className="module-detail-grid">{["Sévérité", "Description", "Opération concernée", "Résumé des preuves", "Enquêteur assigné", "Chronologie", "Historique de résolution"].map((title) => <Unavailable key={title} title={title}/>)}</div>
-    <section className="panel module-subpanel"><h2>Notes internes</h2><textarea disabled placeholder="Notes indisponibles sans incident réel."/><div className="detail-actions"><button disabled>Escalader</button><button disabled>Clôturer</button><span>Actions indisponibles sans incident ni autorisation confirmés.</span></div></section>
+    <div className="incident-detail-grid incident-primary-grid">{[
+      ["Sévérité", "warning", "Les informations de sévérité apparaîtront ici lorsqu’un incident sera sélectionné."],
+      ["Description", "document", "La description de l’incident apparaîtra ici lorsqu’un incident sera sélectionné."],
+      ["Opération concernée", "transactions", "L’opération associée à l’incident apparaîtra ici lorsqu’un incident sera sélectionné."],
+    ].map(([title, icon, description]) => <IncidentCard key={title} title={title} icon={icon} description={description}/>)}</div>
+    <div className="incident-detail-grid incident-secondary-grid">{[
+      ["Résumé des preuves", "document", "Les preuves collectées apparaîtront ici lorsqu’un incident sera sélectionné."],
+      ["Enquêteur assigné", "members", "L’enquêteur assigné apparaîtra ici lorsqu’un incident sera sélectionné."],
+    ].map(([title, icon, description]) => <IncidentCard key={title} title={title} icon={icon} description={description}/>)}</div>
+    <div className="incident-detail-grid incident-activity-grid"><IncidentCard title="Chronologie" icon="audit" description="La chronologie de l’incident apparaîtra ici lorsqu’un incident sera sélectionné."/><section className="panel incident-notes"><h2>Notes internes</h2><textarea disabled placeholder="Aucune note disponible."/></section></div>
+    <section className="panel incident-resolution"><h2>Historique de résolution</h2><div className="incident-resolution-state"><div className="detail-data-icon"><Image src="/assets/icons/document.webp" alt="" width={24} height={24}/></div><div><strong>Données indisponibles</strong><p>L’historique de résolution apparaîtra ici lorsqu’un incident sera sélectionné.</p></div></div></section>
+    <section className="panel incident-actions"><button disabled><Image src="/assets/icons/next.webp" alt="" width={14} height={14}/> Escalader</button><button disabled><Image src="/assets/icons/success.webp" alt="" width={14} height={14}/> Clôturer</button><span className="incident-actions-note"><Image src="/assets/icons/info.webp" alt="" width={18} height={18}/>Actions indisponibles sans incident et autorisation confirmés.</span></section>
   </>;
   if (sectionKey === "support/conversation") return <>
     <BackLink href="/admin/support" label="Retour aux tickets"/>
     <div className="support-workspace"><section className="panel support-list"><h2>Liste des tickets</h2><Unavailable title="Données d’assistance indisponibles"/></section><section className="panel support-thread"><h2>Aucune conversation sélectionnée</h2><Unavailable title="Sélectionnez un ticket réel pour afficher la conversation."/><div className="support-composer"><textarea disabled placeholder="Réponse indisponible sans conversation sélectionnée."/><button disabled>Envoyer</button></div></section><section className="panel support-details"><h2>Détails du ticket</h2>{["Sujet", "Membre", "Statut", "Catégorie"].map((title) => <Unavailable key={title} title={title}/>)}</section></div>
   </>;
   return <Unavailable title="Aucune donnée de dossier disponible"/>;
+}
+
+function IncidentCard({ title, icon, description }: { title: string; icon: string; description: string }) {
+  return <section className="panel incident-card"><h2>{title}</h2><div className="incident-card-state"><div className="detail-data-icon"><Image src={`/assets/icons/${icon}.webp`} alt="" width={30} height={30}/></div><strong>Données indisponibles</strong><p>{description}</p></div></section>;
 }
 
 function InitialBalance({ label }: { label: string }) {

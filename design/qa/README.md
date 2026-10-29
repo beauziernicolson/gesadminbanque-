@@ -161,3 +161,5 @@ Le controle hasUnavailableState de capture-route.cjs reconnait aussi les libelle
 Captures MF-21 : admin-financements-1440x1000.png et admin-financements-390x844.png. Recherche et filtres restent neutres; aucun dossier de financement fictif. Montant propose identifie en HTG.
 
 Captures MF-22 : admin-risques-1440x1000.png et admin-risques-390x844.png. Aucun risque ou analyste fictif; les filtres restent desactives sans source autorisee.
+
+Captures MF-23 : admin-risques-incident-1440x1000.png et admin-risques-incident-390x844.png. Les donnees d'incident restent indisponibles; notes, escalade et cloture ne permettent aucune saisie ou action sans dossier reel.
