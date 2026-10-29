@@ -149,3 +149,5 @@ Revue MF-14 : les captures admin-plans-1440x1000.png et admin-plans-390x844.png 
 Captures MF-16 : admin-souscriptions-1440x1000.png et admin-souscriptions-390x844.png. La liste reste vide tant qu'aucune source GES autorisee ne fournit les donnees; les montants sont libelles en HTG. Les neuf planches MF-01 a MF-34 ont ete regenerees apres les changements de MF-14/MF-16.
 
 Captures MF-17 mises a jour : admin-souscriptions-dossier-1440x1000.png et admin-souscriptions-dossier-390x844.png. Le retour precede le titre; huit panneaux restent indisponibles sans souscription reelle et les actions sont inactives. Aucun engagement ni montant fictif.
+
+Captures MF-18 : admin-contrats-1440x1000.png et admin-contrats-390x844.png. Le registre est vide, le principal est libelle en HTG et les filtres de statut, plan et periode restent inactifs sans source de donnees.
