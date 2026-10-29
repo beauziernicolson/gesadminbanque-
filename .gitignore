@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+coverage/
+.env*
+!.env.example
+*.tsbuildinfo
+design/tooling/
+design/.webp-convert.html
+design/assets/source/
+design/assets/icons-source/
+design/assets/icons-contact.png
+Tableau de bord financier GES.png
+design/responsive/drafts/*.png
+design/master-frames/drafts/*.png
+design/qa/*profile*/
+design/.edge-profile*/

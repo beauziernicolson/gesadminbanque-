@@ -1,0 +1,78 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+type ModulePage = {
+  columns: string[];
+  empty: string;
+  filters: string[];
+  description: string;
+  tabs?: string[];
+  action?: { label: string; href: string };
+};
+
+const pages: Record<string, ModulePage> = {
+  membres: { description: "Consultez les comptes membres retournés par une source GES autorisée.", filters: ["Tous les statuts", "Tous les états KYC", "Trier par"], columns: ["MEMBRE", "STATUT DU COMPTE", "STATUT KYC", "DATE D’ADHÉSION", "PORTEFEUILLE", "ACTIONS"], empty: "Données de membre indisponibles" },
+  kyc: { description: "Consultez les dossiers de vérification retournés par une source GES autorisée.", filters: ["Tous les dossiers", "Tous les statuts"], columns: ["PRIORITÉ", "DOSSIER", "DATE DE SOUMISSION", "RÉVISEUR", "STATUT", "ACTIONS"], empty: "Données KYC indisponibles" },
+  transactions: { description: "Consultez les transactions retournées par une source GES autorisée.", filters: ["Tous les types", "Tous les statuts", "Période"], columns: ["DATE", "RÉFÉRENCE", "MEMBRE", "TYPE", "MONTANT (HTG)", "STATUT", "ACTIONS"], empty: "Données de transaction indisponibles" },
+  "depots-retraits": { description: "Suivez les dépôts et retraits liés aux opérations GES.", filters: ["Tous les statuts", "Période"], tabs: ["Toutes les opérations", "Dépôts", "Retraits"], columns: ["DATE", "RÉFÉRENCE", "MEMBRE", "TYPE", "MONTANT (HTG)", "STATUT"], empty: "Données opérationnelles indisponibles" },
+  plans: { description: "Catalogue des plans d’investissement autorisés sur GES Admin.", filters: ["Tous les statuts", "Catégorie"], columns: ["PLAN", "DEVISE", "RENDEMENT", "DURÉE", "STATUT", "ACTIONS"], empty: "Données des plans indisponibles", action: { label: "Nouveau plan", href: "/admin/plans/nouveau" } },
+  souscriptions: { description: "Consultez les souscriptions retournées par une source GES autorisée.", filters: ["Tous les statuts", "Tous les plans"], columns: ["DATE", "PLAN", "MEMBRE", "MONTANT INVESTI (HTG)", "STATUT", "ACTIONS"], empty: "Données de souscription indisponibles" },
+  contrats: { description: "Registre des contrats d’investissement retournés par une source GES autorisée.", filters: ["Tous les statuts", "Tous les plans", "Période"], columns: ["CONTRAT", "MEMBRE", "PLAN", "PRINCIPAL (HTG)", "DATE DE DÉBUT", "ÉCHÉANCE", "STATUT", "DOCUMENTS"], empty: "Données contractuelles indisponibles" },
+  financements: { description: "Dossiers de financement relevant de GES.", filters: ["Tous les statuts", "Tous les types"], columns: ["PROJET OU BÉNÉFICIAIRE", "MONTANT PROPOSÉ (HTG)", "ÉVALUATION DU RISQUE", "DOCUMENTS", "STATUT", "ÉTAPES"], empty: "Données de financement indisponibles" },
+  risques: { description: "Surveillez les risques et alertes disponibles pour GES.", filters: ["Toutes les catégories", "Toutes les sévérités", "Tous les statuts"], columns: ["SÉVÉRITÉ", "CATÉGORIE", "ENTITÉ GES", "ANALYSTE ASSIGNÉ", "STATUT", "ACTIONS"], empty: "Données de risque indisponibles" },
+  documents: { description: "Documents disponibles dans les espaces GES autorisés.", filters: ["Tous les types"], columns: ["DOCUMENT", "CATÉGORIE", "LIÉ À", "MODIFIÉ LE", "ÉTAT"], empty: "Données documentaires indisponibles" },
+  support: { description: "Demandes d’assistance GES disponibles.", filters: ["Tous les statuts", "Toutes les catégories", "Toutes les priorités"], columns: ["SUJET", "MEMBRE", "CATÉGORIE", "PRIORITÉ", "STATUT", "DERNIÈRE MISE À JOUR", "ACTIONS"], empty: "Données d’assistance indisponibles" },
+  equipe: { description: "Administrateurs et accès GES autorisés.", filters: ["Tous les rôles", "Tous les statuts"], columns: ["ADMINISTRATEUR", "RÔLE", "PERMISSIONS", "STATUT", "DERNIÈRE CONNEXION", "ACTIONS"], empty: "Données d’administration indisponibles" },
+  audit: { description: "Journal des événements administratifs disponibles.", filters: ["Toutes les actions", "Tous les acteurs", "Période"], columns: ["DATE ET HEURE", "ACTEUR", "ACTION", "ENTITÉ CONCERNÉE", "RÉSULTAT", "DÉTAILS"], empty: "Données d’audit indisponibles" },
+};
+
+function EmptyState({ title, searching }: { title: string; searching: boolean }) {
+  return <div className="module-empty"><div className="module-empty-icon"><Image src={`/assets/icons/${searching ? "search" : "document"}.webp`} alt="" width={20} height={20}/></div><h2>{searching ? "Résultats de recherche indisponibles" : title}</h2><p>{searching ? "Aucune source GES autorisée n’a fourni de données à filtrer." : "Les données apparaîtront ici lorsqu’une source GES autorisée les fournira."}</p></div>;
+}
+
+function InitialValueCard({ label }: { label: string }) {
+  return <section className="metric-card"><div className="metric-top"><span>{label}</span><span className="metric-symbol">HTG</span></div><strong>0 HTG</strong><small>Valeur initiale — à confirmer</small></section>;
+}
+
+export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionKey: string; query: string; onQueryChange: (value: string) => void }) {
+  const [activeTab, setActiveTab] = useState(0);
+  const page = pages[sectionKey];
+  if (sectionKey === "tresorerie") return <>
+    <div className="module-notice">Valeurs initiales — les données réelles restent à confirmer. Aucun montant affiché ici ne constitue un solde vérifié.</div>
+    <div className="metric-grid treasury-metrics"><InitialValueCard label="Disponible"/><InitialValueCard label="Réservé"/><InitialValueCard label="Entrées"/><InitialValueCard label="Sorties"/></div>
+    <section className="panel currency-unavailable"><div className="currency-symbol">$</div><div><h2>Position en USD</h2><p>Données indisponibles</p><small>Aucun taux de change ou montant n’est affiché.</small></div></section>
+    <div className="module-two-panels"><section className="panel module-subpanel"><h2>Prévision de liquidité</h2><EmptyState title="Données de prévision indisponibles" searching={false}/></section><section className="panel module-subpanel"><h2>Historique des mouvements</h2><EmptyState title="Données de mouvement indisponibles" searching={false}/></section></div>
+    <section className="panel module-subpanel"><h2>Alertes de trésorerie</h2><EmptyState title="Données d’alerte indisponibles" searching={false}/></section>
+  </>;
+  if (sectionKey === "grand-livre") return <>
+    <div className="module-notice">Valeurs initiales — soldes comptables et rapprochés non confirmés.</div>
+    <div className="module-two-panels ledger-metrics"><InitialValueCard label="Solde comptable"/><InitialValueCard label="Solde rapproché"/></div>
+    <GenericTable sectionKey={sectionKey} page={{ description: "Écritures et rapprochements disponibles.", filters: ["Toutes les périodes"], columns: ["DATE", "RÉFÉRENCE D’ÉCRITURE", "DESCRIPTION", "DÉBIT (HTG)", "CRÉDIT (HTG)", "STATUT"], tabs: ["Grand livre", "Rapprochement"], empty: "Données de grand livre indisponibles" }} query={query} onQueryChange={onQueryChange} activeTab={activeTab} setActiveTab={setActiveTab}/>
+    <section className="panel module-subpanel"><h2>Rapprochement des soldes</h2><EmptyState title="Données de rapprochement indisponibles" searching={false}/></section>
+  </>;
+  if (sectionKey === "echeances") return <>
+    <div className="module-notice">Valeurs initiales — données réelles à confirmer.</div>
+    <div className="module-two-panels"><InitialValueCard label="Capital à distribuer"/><InitialValueCard label="Intérêts à distribuer"/></div>
+    <section className="panel module-subpanel"><div className="module-panel-header"><h2>Calendrier des échéances</h2><button disabled className="filter-button">Période non sélectionnée</button></div><div className="calendar-empty"><div className="calendar-weekdays">{["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"].map((day) => <span key={day}>{day}</span>)}</div><div className="calendar-blank-grid" aria-hidden="true">{Array.from({length:35}, (_, index) => <span key={index}/>)}</div><EmptyState title="Données d’échéance indisponibles" searching={false}/></div></section>
+    <GenericTable sectionKey={sectionKey} page={{ description: "Échéances disponibles.", filters: [], columns: ["ÉCHÉANCE", "TYPE", "BÉNÉFICIAIRE", "MONTANT (HTG)", "STATUT"], empty: "Données d’échéance indisponibles" }} query={query} onQueryChange={onQueryChange} activeTab={activeTab} setActiveTab={setActiveTab}/>
+  </>;
+  if (sectionKey === "rapports") return <>
+    <section className="panel module-subpanel"><div className="module-panel-header"><h2>Vue analytique</h2><div className="module-filter-row"><button disabled className="filter-button">Type de rapport</button><button disabled className="filter-button">Période non sélectionnée</button></div></div><EmptyState title="Aucune donnée de rapport disponible" searching={false}/></section>
+    <section className="panel module-subpanel"><h2>Rapports disponibles</h2><EmptyState title="Données de rapport indisponibles" searching={false}/></section>
+  </>;
+  if (sectionKey === "parametres") return <><div className="module-notice">Les paramètres restent indisponibles sans source GES autorisée.</div><div className="module-settings-grid">{["Profil de l’organisation", "Préférences financières", "Sécurité", "Notifications administratives"].map((title) => <section className="panel module-subpanel" key={title}><h2>{title}</h2><EmptyState title="Données indisponibles" searching={false}/></section>)}</div><button className="primary-button" disabled>Enregistrer les modifications</button></>;
+  if (sectionKey === "roles-permissions") return <>
+    <section className="panel list-panel"><div className="module-panel-header"><h2>Rôles</h2><button disabled className="filter-button">Créer un rôle</button></div><div className="table-wrap"><table><thead><tr>{["RÔLE", "DESCRIPTION", "ADMINISTRATEURS", "STATUT"].map((label) => <th key={label}>{label}</th>)}</tr></thead><tbody><tr><td colSpan={4}><EmptyState title="Données de rôle indisponibles" searching={false}/></td></tr></tbody></table></div></section>
+    <section className="panel list-panel module-subpanel"><div className="module-panel-header"><h2>Matrice des permissions</h2><button disabled className="filter-button">Action indisponible</button></div><div className="table-wrap"><table><thead><tr>{["PERMISSION", "DESCRIPTION", "RÔLE", "STATUT"].map((label) => <th key={label}>{label}</th>)}</tr></thead><tbody><tr><td colSpan={4}><EmptyState title="Données de permission indisponibles" searching={false}/></td></tr></tbody></table></div><div className="module-notice subtle">Les permissions effectives sont toujours vérifiées côté serveur.</div></section>
+  </>;
+  if (sectionKey === "integrations-flexicash") return <><div className="module-notice">Les espaces d’administration GES et FlexiCash restent séparés.</div><div className="module-two-panels"><section className="panel module-subpanel"><h2>État de l’intégration</h2><EmptyState title="Données d’intégration indisponibles" searching={false}/></section><section className="panel module-subpanel"><h2>Opérations GES liées</h2><EmptyState title="Données d’opérations indisponibles" searching={false}/></section></div></>;
+  if (!page) return <GenericTable sectionKey={sectionKey} page={{ description: "Données GES disponibles.", filters: ["Filtres", "Période"], columns: ["RÉFÉRENCE", "DESCRIPTION", "DATE", "STATUT", "MONTANT (HTG)"], empty: "Aucune donnée disponible" }} query={query} onQueryChange={onQueryChange} activeTab={activeTab} setActiveTab={setActiveTab}/>;
+  return <GenericTable sectionKey={sectionKey} page={page} query={query} onQueryChange={onQueryChange} activeTab={activeTab} setActiveTab={setActiveTab}/>;
+}
+
+function GenericTable({ sectionKey, page, query, onQueryChange, activeTab, setActiveTab }: { sectionKey: string; page: ModulePage; query: string; onQueryChange: (value: string) => void; activeTab: number; setActiveTab: (value: number) => void }) {
+  return <section className="panel list-panel module-list-panel"><div className="module-panel-header"><div><h2>{sectionKey === "plans" ? "Catalogue des plans" : sectionKey === "depots-retraits" ? "Opérations" : "Liste"}</h2><p>{page.description}</p></div>{page.action && <Link className="primary-button" href={page.action.href}>{page.action.label}</Link>}</div>{page.tabs && <div className="module-tabs">{page.tabs.map((tab, index) => <button key={tab} className={activeTab === index ? "selected" : ""} onClick={() => setActiveTab(index)}>{tab}</button>)}</div>}<div className="module-toolbar"><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label={`Rechercher dans ${sectionKey}`} placeholder={`Rechercher ${sectionKey.replaceAll("-", " ")}…`} value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><div className="module-filter-row">{page.filters.map((filter) => <button key={filter} className="filter-button" disabled>{filter}<span>⌄</span></button>)}</div></div><div className="table-wrap"><table><thead><tr>{page.columns.map((column, index) => <th key={column} className={column.includes("HTG") ? "align-right" : ""}>{column}</th>)}</tr></thead><tbody><tr><td colSpan={page.columns.length}><EmptyState title={page.empty} searching={query.trim().length > 0}/></td></tr></tbody></table></div></section>;
+}

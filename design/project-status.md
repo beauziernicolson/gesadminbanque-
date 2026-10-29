@@ -1,0 +1,46 @@
+# Suivi GES Admin
+
+Le brief intégral a été lu. La consigne du propriétaire prévaut : aucun chiffre métier ni identité fictive n’est injecté. Les devis et champs financiers de saisie sont en HTG; les champs numériques du formulaire de plan commencent à zéro. Les soldes initiaux à zéro sont marqués non confirmés. Une source absente reste indisponible, jamais un solde nul vérifié.
+
+## État au 29 octobre 2026
+
+| Lot | État | Preuve ou reste |
+|---|---|---|
+| Audit | Partiel; sources GES/Supabase vérifiées en lecture seule | Le brief intégral, l’application de ce workspace, les sources frontend et backend GES et les pages Notion fournies ont été relus. Les références financières actives et les champs par défaut ont été revus : uniquement `0 HTG`, aucun chiffre métier fictif. L’image de tableau de bord d’origine contient des données d’exemple et n’est pas reprise dans le produit. Le projet Supabase GES `jaxljncwyivnpgfoniij` est actif et sain; ses RPC de compte/permissions et leurs grants ont été vérifiés par requête SQL en lecture seule. Aucun compte métier ni contenu financier n’a été lu ou modifié. |
+| Master Shell MF-00 | v3 approuvé et verrouillé; vue de commandement comparée et réalignée | `master-frames/exports-webp/GES-Admin-MF-00-v3-draft.webp`; la vue générale reprend maintenant les quatre KPI HTG à zéro, les deux panneaux analytiques vides et la table d’activité. Capture navigateur mise à jour dans `qa/admin-vue-generale-1440x1000.png`. |
+| MF-01 à MF-34 | Références desktop produites; comparaison visuelle des neuf planches effectuée | MF-01 v3, capture réelle de l’application, et MF-03 à MF-34 sont appariés dans `comparison-01.png` à `comparison-09.png`. La proposition d’erreur MF-01 v2 reste non vérifiée. MF-15 v2 couvre l’état par défaut et le formulaire complet; tous ses champs numériques valent zéro et ses montants sont HTG. Les écarts visibles restants portent surtout sur la densité et la géométrie des panneaux; l’état ouvert de MF-15 les captures des deux etats sont dans design/qa; ecarts de shell et typographie encore visibles. MF-02 attend une session MFA réelle. |
+| Responsive | Références mobiles ou planches pour MF-01 à MF-34; comparaison des nouvelles propositions faite | Tous les écrans ont une référence mobile ou une planche responsive. MF-01 utilise maintenant une capture réelle mobile sans options de récupération/mémorisation; MF-02, MF-05, MF-06 et MF-07 restent des propositions non verrouillées. MF-05 a des onglets divergents et MF-06 conserve un en-tête desktop. Les captures applicatives couvrent les 32 routes MF-03 à MF-34 plus la connexion; la vraie étape MFA attend un facteur configuré. |
+| Assets | 44 icônes WebP et logo WebP livrés à `public/assets/` | Les 45 ressources publiques ont été contrôlées avec `webpinfo`. Inventaire : `assets/registry.md`. |
+| Frontend | Application Next.js avec shell MF-00, listes par module, vues financières et fiches de détail vides | Colonnes et filtres dédiés pour les principales listes; trésorerie, grand livre avec rapprochement, échéances avec calendrier sans dates fictives, rapports, paramètres, permissions, FlexiCash, notifications et sept parcours de détail ont des vues spécifiques. La création de plan multi-section est intégrée au shell MF-00; devise HTG, six champs numériques à zéro. Le logo officiel est utilisé sur la connexion. Les mutations restent désactivées sans contrat confirmé. |
+| Accès et données | Fermé par défaut; contrôle d'autorisation GES raccordé | Supabase SSR exige une session vérifiée, AAL2, un compte `active`, puis les RPC existantes `get_my_access_state()` et `get_my_permissions()` doivent confirmer `users:manage` et `transactions:manage`. URL et clé publiable sont définies localement dans `.env.local` (ignoré par Git). Sans configuration, sans session ou en cas d'erreur, l'accès est refusé. Le shell reste vide et aucune API métier n'est raccordée; le snapshot admin disponible sur `main-backend` est temporaire et son endpoint n'est pas validé pour transfert depuis le domaine indépendant. Aperçu local sans enregistrements ni écriture. |
+| QA | Automatisée et revue visuelle effectuées; limites documentées | TypeScript et build Next relancés le 29 octobre 2026 après raccordement du contrôle serveur; les deux passent. Le serveur production local avec configuration Supabase a répondu 200 pour `/connexion`, les routes admin et la galerie locale; sans session, les deux routes admin testées et la création de plan affichent la barrière sans montant ni enregistrement. DevTools a contrôlé les 33 routes (connexion + MF-03 à MF-34) aux largeurs 320, 390, 720, 834 et 1440 px : aucune alerte sur le contraste calculé, les noms de contrôles, les valeurs numériques, les landmarks, les titres ou les débordements. `check-mobile-drawer.cjs` valide le piège de focus, les fermetures clavier/fond, le retour du focus et 5,56:1 sur le texte d’état vide. Les neuf planches desktop ont été inspectées; leur différence résiduelle la plus visible est la densité/hauteur des panneaux. Limites : aucun compte réel ni MFA AAL2 testé, pas de lecteur d’écran réel ni de zoom natif navigateur. Rapport : `qa/accessibility-audit-latest.json`. |
+| Dépôt et déploiement | En attente | Pas de dépôt Git local ni de projet Vercel `ges-admin` existant. Aucun projet externe n’a été créé et rien n’a été déployé. |
+
+## Données financières
+
+- Devis et champs de devis : HTG; valeurs numériques par défaut : `0`.
+- Aucune conversion de devise, aucun taux et aucun solde fictif.
+- Les données réelles d’une autre devise ne pourront s’afficher que séparément, depuis une source autorisée. USD est présenté comme indisponible en attendant.
+- Pas de fixture en aperçu, pas de fausse identité, de date, de KPI ou de statut d’opération.
+- Aucun schéma, donnée, permission, Edge Function ou moteur financier Supabase n’a été modifié.
+
+## Dépendances pour terminer
+
+1. Verrouiller les Master Frames et les états visuels par lot avant de finir leurs pages.
+2. Confirmer avec le propriétaire backend le projet Supabase GES, la clé publishable, le fournisseur MFA et la règle serveur existante qui reconnaît les administrateurs.
+3. Compléter les interactions et états des 34 interfaces sans inventer de contrat API.
+4. Finir QA visuelle, responsive, accessibilité et documentation.
+5. Préparer le nouveau projet Vercel indépendant; obtenir l’approbation finale avant création/publication.
+
+
+Revue MF-15 ouverte du 29 octobre 2026 : la page correspond maintenant à la géométrie principale de la référence en état ouvert (paramètres trois colonnes, trois cartes avancées en rangée, aperçu/publication pleine largeur). Capture comparative design/qa/comparison-mf15-open.png. Audit navigateur : titre conforme, devise HTG, six paramètres à 0, champs libres vides, quatre sections ouvertes, actions désactivées et aucune largeur excédentaire à 1440 px. La comparaison reste une proposition; écarts shell/typo persistent et aucun verrouillage n’est déclaré.
+
+Controle mobile MF-15 pleine page du 29 octobre : capture reelle design/qa/admin-plans-nouveau-default-390x844-fullpage.png (390 x 1367 px). Comparaison avec la nouvelle reference mobile v2 : design/qa/frame-review/MF-15-mobile-fullpage-comparison.png. Six valeurs numeriques a zero HTG, texte vide, deux actions visibles et desactivees; aucune largeur excedentaire. La reference reste proposee, les ecarts de shell et de typographie restent a revoir.
+
+La barre Brouillon/Publication de MF-15 reste visible dans l'etat replie et ouvert, sans doublon. Le controle navigateur confirme exactement deux actions visibles, toutes deux desactivees; les six valeurs numeriques de saisie sont zero HTG. Les comparaisons desktop MF-15 sont regenerees pour l'etat replie et l'etat ouvert.
+
+Parcours de sécurité — formulaire MFA : textes français et accents restaurés dans `components/login-form.tsx`; une erreur après authentification avant AAL2 ferme la session, et le retour manuel à la connexion ferme aussi la session partielle. Le challenge et la validation MFA restent ceux de Supabase, sans facteur ni code fictif. TypeScript et le build de production passent le 29 octobre 2026.
+
+Durcissement complémentaire du retour MFA : le formulaire reste sur l’étape de vérification et affiche une erreur si Supabase ne confirme pas la fermeture de session; les identifiants du challenge ne sont effacés qu’après succès. TypeScript et `next build` repassent après ce changement.
+
+MF-02 : le champ TOTP est limité à six chiffres et n’accepte que des chiffres; aucun code prérempli ou fictif. Le contrôle s’appuie toujours sur le challenge Supabase réel. Le parcours nécessite encore un facteur/une session réels pour sa QA navigateur.

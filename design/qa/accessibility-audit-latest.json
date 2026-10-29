@@ -1,0 +1,18 @@
+{
+  "auditDate": "2026-10-29T05:18:10.319Z",
+  "routesExpected": 33,
+  "routesVisited": 33,
+  "viewports": [
+    320,
+    390,
+    720,
+    834,
+    1440
+  ],
+  "findings": [],
+  "limitations": [
+    "Le rendu MFA réel n’a pas été ouvert sans authentification et facteur TOTP configuré.",
+    "L’arbre d’accessibilité Chromium a été inspecté; aucun lecteur d’écran n’a été piloté dans cette passe.",
+    "720 px CSS sert de contrôle de reflow équivalent à une fenêtre desktop réduite; le zoom natif du navigateur n’a pas été simulé."
+  ]
+}
