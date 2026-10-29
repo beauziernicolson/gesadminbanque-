@@ -165,3 +165,4 @@ Captures MF-22 : admin-risques-1440x1000.png et admin-risques-390x844.png. Aucun
 Captures MF-23 : admin-risques-incident-1440x1000.png et admin-risques-incident-390x844.png. Les donnees d'incident restent indisponibles; notes, escalade et cloture ne permettent aucune saisie ou action sans dossier reel.
 
 Captures MF-24 : admin-support-1440x1000.png et admin-support-390x844.png. Aucun ticket de demonstration, identite ou message; les filtres restent neutres sans source GES autorisee.
+Captures MF-25 : admin-support-conversation-1440x1000.png et admin-support-conversation-390x844.png. La conversation vide indique clairement les tickets et details indisponibles; reponse desactivee sans conversation et autorisation confirmees. Aucun identifiant, message, statut, date ou montant fictif.
