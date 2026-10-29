@@ -1,5 +1,7 @@
 # Suivi GES Admin
 
+Révision MF-10 : captures desktop (1440 × 1000) et mobile (390 × 844) regénérées après alignement du panneau, des filtres et des colonnes. Chrome confirme l’état vide sans transactions et l’absence de débordement horizontal aux deux tailles. Les valeurs financières restent en HTG, sans montant fictif; voir `design/qa/README.md` et `design/qa/frame-review/MF-10-transactions-mobile-review.png`.
+
 Le brief intégral a été lu. La consigne du propriétaire prévaut : aucun chiffre métier ni identité fictive n’est injecté. Les devis et champs financiers de saisie sont en HTG; les champs numériques du formulaire de plan commencent à zéro. Les soldes initiaux à zéro sont marqués non confirmés. Une source absente reste indisponible, jamais un solde nul vérifié.
 
 ## État au 29 octobre 2026
