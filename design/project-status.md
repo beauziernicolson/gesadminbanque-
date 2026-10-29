@@ -57,3 +57,5 @@ Revue MF-17 (29 octobre 2026) : lien de retour avant le titre, titre/sous-titre 
 Revue MF-18 (29 octobre 2026) : sous-titre, recherche, filtres (dont icone de periode) et huit colonnes rapproches de la reference. Aucun contrat ni terme financier fictif; principal affiche en HTG. Captures desktop/mobile confirment l'etat vide et l'absence de debordement horizontal du viewport (1440/390 px).
 
 Revue MF-19 (29 octobre 2026) : retour avant le titre; conditions versionnees, huit valeurs, restrictions, documents et evenements affiches comme indisponibles sans contrat selectionne. Aucun terme financier, date ou evenement fictif. Principal identifie en HTG. Captures desktop/mobile; Chrome confirme le titre et aucune largeur de page superieure au viewport (1440/390 px).
+
+Revue MF-20 (29 octobre 2026) : calendrier sans jour numerote ni date fictive, controles de periode desactives, liste des echeances distincte et etat vide clarifie. Capital a distribuer et interets a distribuer restent a 0 HTG, marques comme valeurs initiales a confirmer. Chrome confirme l'etat vide et aucune largeur de page superieure au viewport (1440/390 px).

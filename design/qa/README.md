@@ -153,3 +153,7 @@ Captures MF-17 mises a jour : admin-souscriptions-dossier-1440x1000.png et admin
 Captures MF-18 : admin-contrats-1440x1000.png et admin-contrats-390x844.png. Le registre est vide, le principal est libelle en HTG et les filtres de statut, plan et periode restent inactifs sans source de donnees.
 
 Captures MF-19 : admin-contrats-dossier-1440x1000.png et admin-contrats-dossier-390x844.png. Les termes, montants, dates, restrictions, documents et evenements restent indisponibles sans contrat selectionne; aucun chiffre fictif n'est affiche.
+
+Captures MF-20 : admin-echeances-1440x1000.png et admin-echeances-390x844.png. Les deux valeurs financieres sont 0 HTG, marquees valeur initiale; calendrier et liste restent sans date, echeance ni mouvement fictif. La periode n'est pas selectionnee et ses commandes sont desactivees.
+
+Le controle hasUnavailableState de capture-route.cjs reconnait aussi les libelles explicites du catalogue vide (ex. aucun contrat/aucune echeance a afficher), et pas uniquement le mot Donnees.

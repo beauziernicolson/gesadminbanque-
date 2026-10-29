@@ -6,9 +6,12 @@ import Image from "next/image";
 type ModulePage = {
   columns: string[];
   empty: string;
+  emptyDescription?: string;
   filters: string[];
   description: string;
+  title?: string;
   searchPlaceholder?: string;
+  showSearch?: boolean;
   tabs?: string[];
 };
 
@@ -28,12 +31,16 @@ const pages: Record<string, ModulePage> = {
   audit: { description: "Journal des événements administratifs disponibles.", filters: ["Toutes les actions", "Tous les acteurs", "Période"], columns: ["DATE ET HEURE", "ACTEUR", "ACTION", "ENTITÉ CONCERNÉE", "RÉSULTAT", "DÉTAILS"], empty: "Données d’audit indisponibles" },
 };
 
-function EmptyState({ title, searching }: { title: string; searching: boolean }) {
-  return <div className="module-empty"><div className="module-empty-icon"><Image src={`/assets/icons/${searching ? "search" : "document"}.webp`} alt="" width={20} height={20}/></div><h2>{searching ? "Résultats de recherche indisponibles" : title}</h2><p>{searching ? "Aucune source GES autorisée n’a fourni de données à filtrer." : "Les données apparaîtront ici lorsqu’une source GES autorisée les fournira."}</p></div>;
+function EmptyState({ title, searching, description }: { title: string; searching: boolean; description?: string }) {
+  return <div className="module-empty"><div className="module-empty-icon"><Image src={`/assets/icons/${searching ? "search" : "document"}.webp`} alt="" width={20} height={20}/></div><h2>{searching ? "Résultats de recherche indisponibles" : title}</h2><p>{searching ? "Aucune source GES autorisée n’a fourni de données à filtrer." : description ?? "Les données apparaîtront ici lorsqu’une source GES autorisée les fournira."}</p></div>;
 }
 
 function InitialValueCard({ label }: { label: string }) {
   return <section className="metric-card"><div className="metric-top"><span>{label}</span><span className="metric-symbol">HTG</span></div><strong>0 HTG</strong><small>Valeur initiale — à confirmer</small></section>;
+}
+
+function DistributionValueCard({ label, icon }: { label: string; icon: string }) {
+  return <section className="panel distribution-value-card"><div className="distribution-value-icon"><Image src={`/assets/icons/${icon}.webp`} alt="" width={28} height={28}/></div><div><span>{label}</span><strong>0 HTG</strong></div><small>Valeur initiale</small></section>;
 }
 
 export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionKey: string; query: string; onQueryChange: (value: string) => void }) {
@@ -54,9 +61,9 @@ export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionK
   </>;
   if (sectionKey === "echeances") return <>
     <div className="module-notice">Valeurs initiales — données réelles à confirmer.</div>
-    <div className="module-two-panels"><InitialValueCard label="Capital à distribuer"/><InitialValueCard label="Intérêts à distribuer"/></div>
-    <section className="panel module-subpanel"><div className="module-panel-header"><h2>Calendrier des échéances</h2><button disabled className="filter-button">Période non sélectionnée</button></div><div className="calendar-empty"><div className="calendar-weekdays">{["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"].map((day) => <span key={day}>{day}</span>)}</div><div className="calendar-blank-grid" aria-hidden="true">{Array.from({length:35}, (_, index) => <span key={index}/>)}</div><EmptyState title="Données d’échéance indisponibles" searching={false}/></div></section>
-    <GenericTable sectionKey={sectionKey} page={{ description: "Échéances disponibles.", filters: [], columns: ["ÉCHÉANCE", "TYPE", "BÉNÉFICIAIRE", "MONTANT (HTG)", "STATUT"], empty: "Données d’échéance indisponibles" }} query={query} onQueryChange={onQueryChange} activeTab={activeTab} setActiveTab={setActiveTab}/>
+    <div className="module-two-panels distribution-values"><DistributionValueCard label="Capital à distribuer" icon="treasury"/><DistributionValueCard label="Intérêts à distribuer" icon="interest"/></div>
+    <section className="panel module-subpanel calendar-panel"><div className="module-panel-header"><h2>Calendrier des échéances</h2><div className="calendar-period-controls"><button type="button" disabled aria-label="Période précédente">‹</button><button type="button" disabled>Période non sélectionnée</button><button type="button" disabled aria-label="Période suivante">›</button></div></div><div className="calendar-empty"><div className="calendar-weekdays">{["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"].map((day) => <span key={day}>{day}</span>)}</div><div className="calendar-blank-grid" aria-hidden="true">{Array.from({length:35}, (_, index) => <span key={index}/>)}</div><EmptyState title="Aucune échéance disponible" description="Les échéances apparaîtront ici lorsqu’elles seront disponibles." searching={false}/></div></section>
+    <GenericTable sectionKey={sectionKey} page={{ title: "Liste des échéances", description: "", filters: [], showSearch: false, columns: ["Échéance", "Type", "Bénéficiaire", "Montant (HTG)", "Statut"], empty: "Aucune échéance disponible", emptyDescription: "Les échéances apparaîtront ici lorsqu’elles seront disponibles." }} query={query} onQueryChange={onQueryChange} activeTab={activeTab} setActiveTab={setActiveTab}/>
   </>;
   if (sectionKey === "rapports") return <>
     <section className="panel module-subpanel"><div className="module-panel-header"><h2>Vue analytique</h2><div className="module-filter-row"><button disabled className="filter-button">Type de rapport</button><button disabled className="filter-button">Période non sélectionnée</button></div></div><EmptyState title="Aucune donnée de rapport disponible" searching={false}/></section>
@@ -73,5 +80,5 @@ export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionK
 }
 
 function GenericTable({ sectionKey, page, query, onQueryChange, activeTab, setActiveTab }: { sectionKey: string; page: ModulePage; query: string; onQueryChange: (value: string) => void; activeTab: number; setActiveTab: (value: number) => void }) {
-  return <section className="panel list-panel module-list-panel">{page.tabs && <div className="module-tabs">{page.tabs.map((tab, index) => <button key={tab} className={activeTab === index ? "selected" : ""} onClick={() => setActiveTab(index)}>{tab}</button>)}</div>}<div className="module-toolbar"><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label={`Rechercher dans ${sectionKey}`} placeholder={page.searchPlaceholder ?? `Rechercher ${sectionKey.replaceAll("-", " ")}…`} value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><div className="module-filter-row">{page.filters.map((filter) => <button key={filter} className="filter-button" disabled>{filter.startsWith("Sélectionner une période") && <Image className="period-filter-icon" src="/assets/icons/calendar.webp" alt="" width={16} height={16}/>}<span className="filter-label">{filter}</span><span>⌄</span></button>)}</div></div><div className="table-wrap"><table><thead><tr>{page.columns.map((column, index) => <th key={column} className={column.includes("HTG") ? "align-right" : ""}>{column}</th>)}</tr></thead><tbody><tr><td colSpan={page.columns.length}><EmptyState title={page.empty} searching={query.trim().length > 0}/></td></tr></tbody></table></div></section>;
+  return <section className={`panel list-panel module-list-panel ${page.showSearch === false ? "no-list-search" : ""}`}>{page.title && <div className="module-panel-header"><div><h2>{page.title}</h2>{page.description && <p>{page.description}</p>}</div></div>}{page.tabs && <div className="module-tabs">{page.tabs.map((tab, index) => <button key={tab} className={activeTab === index ? "selected" : ""} onClick={() => setActiveTab(index)}>{tab}</button>)}</div>}{page.showSearch !== false && <div className="module-toolbar"><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label={`Rechercher dans ${sectionKey}`} placeholder={page.searchPlaceholder ?? `Rechercher ${sectionKey.replaceAll("-", " ")}…`} value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><div className="module-filter-row">{page.filters.map((filter) => <button key={filter} className="filter-button" disabled>{filter.startsWith("Sélectionner une période") && <Image className="period-filter-icon" src="/assets/icons/calendar.webp" alt="" width={16} height={16}/>}<span className="filter-label">{filter}</span><span>⌄</span></button>)}</div></div>}<div className="table-wrap"><table><thead><tr>{page.columns.map((column, index) => <th key={column} className={column.includes("HTG") ? "align-right" : ""}>{column}</th>)}</tr></thead><tbody><tr><td colSpan={page.columns.length}><EmptyState title={page.empty} description={page.emptyDescription} searching={query.trim().length > 0}/></td></tr></tbody></table></div></section>;
 }
