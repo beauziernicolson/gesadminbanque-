@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 type ModulePage = {
   columns: string[];
@@ -11,7 +10,6 @@ type ModulePage = {
   description: string;
   searchPlaceholder?: string;
   tabs?: string[];
-  action?: { label: string; href: string };
 };
 
 const pages: Record<string, ModulePage> = {
@@ -19,7 +17,7 @@ const pages: Record<string, ModulePage> = {
   kyc: { description: "Consultez les dossiers de vérification retournés par une source GES autorisée.", filters: ["Tous les dossiers", "Tous les statuts"], columns: ["PRIORITÉ", "DOSSIER", "DATE DE SOUMISSION", "RÉVISEUR", "STATUT", "ACTIONS"], empty: "Données KYC indisponibles" },
   transactions: { description: "Consultez les transactions retournées par une source GES autorisée.", searchPlaceholder: "Rechercher une transaction…", filters: ["Tous les types", "Tous les statuts", "Sélectionner une période"], columns: ["Date", "Référence", "Membre", "Type", "Montant (HTG)", "Statut", "Actions"], empty: "Données de transaction indisponibles" },
   "depots-retraits": { description: "Suivez les dépôts et retraits liés aux opérations GES.", filters: ["Tous les statuts", "Période"], tabs: ["Toutes les opérations", "Dépôts", "Retraits"], columns: ["DATE", "RÉFÉRENCE", "MEMBRE", "TYPE", "MONTANT (HTG)", "STATUT"], empty: "Données opérationnelles indisponibles" },
-  plans: { description: "Catalogue des plans d’investissement autorisés sur GES Admin.", filters: ["Tous les statuts", "Catégorie"], columns: ["PLAN", "DEVISE", "RENDEMENT", "DURÉE", "STATUT", "ACTIONS"], empty: "Données des plans indisponibles", action: { label: "Nouveau plan", href: "/admin/plans/nouveau" } },
+  plans: { description: "Catalogue des plans d’investissement autorisés sur GES Admin.", filters: ["Tous les statuts", "Catégorie"], columns: ["PLAN", "DEVISE", "RENDEMENT", "DURÉE", "STATUT", "ACTIONS"], empty: "Données des plans indisponibles" },
   souscriptions: { description: "Consultez les souscriptions retournées par une source GES autorisée.", filters: ["Tous les statuts", "Tous les plans"], columns: ["DATE", "PLAN", "MEMBRE", "MONTANT INVESTI (HTG)", "STATUT", "ACTIONS"], empty: "Données de souscription indisponibles" },
   contrats: { description: "Registre des contrats d’investissement retournés par une source GES autorisée.", filters: ["Tous les statuts", "Tous les plans", "Période"], columns: ["CONTRAT", "MEMBRE", "PLAN", "PRINCIPAL (HTG)", "DATE DE DÉBUT", "ÉCHÉANCE", "STATUT", "DOCUMENTS"], empty: "Données contractuelles indisponibles" },
   financements: { description: "Dossiers de financement relevant de GES.", filters: ["Tous les statuts", "Tous les types"], columns: ["PROJET OU BÉNÉFICIAIRE", "MONTANT PROPOSÉ (HTG)", "ÉVALUATION DU RISQUE", "DOCUMENTS", "STATUT", "ÉTAPES"], empty: "Données de financement indisponibles" },
@@ -75,5 +73,5 @@ export function ModuleWorkspace({ sectionKey, query, onQueryChange }: { sectionK
 }
 
 function GenericTable({ sectionKey, page, query, onQueryChange, activeTab, setActiveTab }: { sectionKey: string; page: ModulePage; query: string; onQueryChange: (value: string) => void; activeTab: number; setActiveTab: (value: number) => void }) {
-  return <section className="panel list-panel module-list-panel">{page.action && <div className="module-panel-header"><div><h2>Catalogue des plans</h2><p>{page.description}</p></div><Link className="primary-button" href={page.action.href}>{page.action.label}</Link></div>}{page.tabs && <div className="module-tabs">{page.tabs.map((tab, index) => <button key={tab} className={activeTab === index ? "selected" : ""} onClick={() => setActiveTab(index)}>{tab}</button>)}</div>}<div className="module-toolbar"><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label={`Rechercher dans ${sectionKey}`} placeholder={page.searchPlaceholder ?? `Rechercher ${sectionKey.replaceAll("-", " ")}…`} value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><div className="module-filter-row">{page.filters.map((filter) => <button key={filter} className="filter-button" disabled>{filter}<span>⌄</span></button>)}</div></div><div className="table-wrap"><table><thead><tr>{page.columns.map((column, index) => <th key={column} className={column.includes("HTG") ? "align-right" : ""}>{column}</th>)}</tr></thead><tbody><tr><td colSpan={page.columns.length}><EmptyState title={page.empty} searching={query.trim().length > 0}/></td></tr></tbody></table></div></section>;
+  return <section className="panel list-panel module-list-panel">{page.tabs && <div className="module-tabs">{page.tabs.map((tab, index) => <button key={tab} className={activeTab === index ? "selected" : ""} onClick={() => setActiveTab(index)}>{tab}</button>)}</div>}<div className="module-toolbar"><label className="filter-search"><Image src="/assets/icons/search.webp" alt="" width={16} height={16}/><input aria-label={`Rechercher dans ${sectionKey}`} placeholder={page.searchPlaceholder ?? `Rechercher ${sectionKey.replaceAll("-", " ")}…`} value={query} onChange={(event) => onQueryChange(event.target.value)}/></label><div className="module-filter-row">{page.filters.map((filter) => <button key={filter} className="filter-button" disabled>{filter}<span>⌄</span></button>)}</div></div><div className="table-wrap"><table><thead><tr>{page.columns.map((column, index) => <th key={column} className={column.includes("HTG") ? "align-right" : ""}>{column}</th>)}</tr></thead><tbody><tr><td colSpan={page.columns.length}><EmptyState title={page.empty} searching={query.trim().length > 0}/></td></tr></tbody></table></div></section>;
 }

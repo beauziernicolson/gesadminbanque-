@@ -46,3 +46,5 @@ Parcours de sécurité — formulaire MFA : textes français et accents restaur�
 Durcissement complémentaire du retour MFA : le formulaire reste sur l’étape de vérification et affiche une erreur si Supabase ne confirme pas la fermeture de session; les identifiants du challenge ne sont effacés qu’après succès. TypeScript et `next build` repassent après ce changement.
 
 MF-02 : le champ TOTP est limité à six chiffres et n’accepte que des chiffres; aucun code prérempli ou fictif. Le contrôle s’appuie toujours sur le challenge Supabase réel. Le parcours nécessite encore un facteur/une session réels pour sa QA navigateur.
+
+Revue MF-14 du 29 octobre 2026 : titre et sous-titre du catalogue alignés sur la référence; l’action « Nouveau plan » est dans l’en-tête de page et le titre de panneau redondant a été supprimé. Captures réelles dmin-plans-1440x1000.png et dmin-plans-390x844.png. Chrome confirme l’état sans plan, l’absence de donnée fictive et aucune largeur de page supérieure au viewport à 1440 px ou 390 px. Le tableau conserve son défilement horizontal interne sur mobile. MF-14 reste une comparaison proposée, non verrouillée.
