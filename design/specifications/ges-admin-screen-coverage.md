@@ -30,7 +30,9 @@
 | MF-21 | Financements | `/admin/financements` | Dossiers vides; montants HTG. |
 | MF-22 | Risques et alertes | `/admin/risques` | Liste vide; aucune alerte ou sévérité fictive. |
 | MF-23 | Détail d’incident | `/admin/risques/incident` | Détail indisponible; mutations désactivées. |
-| MF-24 | Assistance | `/admin/support` | File vide. |
+| MF-23a | Litiges | `/admin/litiges`, `/admin/litiges/dossier` | File vide; preuves, chronologie et motif prevus; decisions desactivees sans contrat GES autorise. |
+| MF-23b | Recuperations | `/admin/recuperations`, `/admin/recuperations/dossier` | File vide; deux revues prevues; actions desactivees sans contrat GES autorise. |
+| MF-24 | Assistance | `/admin/support` | File vide; modes de reponse membre et note interne visibles, envoi desactive. |
 | MF-25 | Conversation support | `/admin/support/conversation` | Aucune conversation; compositeur et envoi désactivés. |
 | MF-26 | Documents et notifications | `/admin/documents`, `/admin/notifications` | Deux routes distinctes; états vides. |
 | MF-27 | Rapports et analyses | `/admin/rapports` | Rapports et mesures indisponibles; aucun agrégat simulé. |

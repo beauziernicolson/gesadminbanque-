@@ -27,6 +27,8 @@ const pages: Record<string, ModulePage> = {
   souscriptions: { description: "Consultez les souscriptions retournées par une source GES autorisée.", searchPlaceholder: "Rechercher une souscription…", filters: ["Tous les statuts", "Tous les plans"], columns: ["Date", "Plan", "Membre", "Montant investi (HTG)", "Statut", "Actions"], empty: "Données de souscription indisponibles" },
   contrats: { description: "Registre des contrats d’investissement retournés par une source GES autorisée.", searchPlaceholder: "Rechercher un contrat…", filters: ["Tous les statuts", "Tous les plans", "Sélectionner une période"], columns: ["Contrat", "Membre", "Plan", "Principal (HTG)", "Date de début", "Échéance", "Statut", "Documents"], empty: "Aucun contrat à afficher" },
   financements: { description: "Dossiers de financement relevant de GES.", searchPlaceholder: "Rechercher un financement…", filters: ["Tous les statuts", "Tous les types"], columns: ["Projet ou bénéficiaire", "Montant proposé (HTG)", "Évaluation du risque", "Documents", "Statut", "Étapes"], empty: "Aucune demande de financement", emptyDescription: "Les dossiers apparaîtront ici lorsqu’ils seront disponibles." },
+  litiges: { title: "File des litiges", description: "Examen des contestations liees aux operations GES.", searchPlaceholder: "Rechercher un litige...", filters: ["Tous les types", "Tous les statuts", "Toutes les priorites"], columns: ["REFERENCE", "OPERATION", "MEMBRE", "MONTANT CONTESTE (HTG)", "PRIORITE", "STATUT", "ACTIONS"], empty: "Aucun litige disponible", emptyDescription: "Les dossiers apparaitront lorsqu une source GES autorisee les fournira." },
+  recuperations: { title: "File des recuperations", description: "Examen des demandes avec une seconde validation.", searchPlaceholder: "Rechercher une demande...", filters: ["Tous les statuts", "Tous les modes", "Toutes les etapes"], columns: ["REFERENCE", "MEMBRE", "MODE", "ETAPE DE VALIDATION", "DATE DE SOUMISSION", "STATUT", "ACTIONS"], empty: "Aucune demande disponible", emptyDescription: "Les demandes apparaitront lorsqu une source GES autorisee les fournira." },
   risques: { description: "Surveillez les risques et alertes disponibles pour GES.", searchPlaceholder: "Rechercher une alerte…", filters: ["Toutes les catégories", "Toutes les sévérités", "Tous les statuts"], columns: ["Sévérité", "Catégorie", "Entité GES", "Analyste assigné", "Statut", "Actions"], empty: "Aucune alerte disponible", emptyDescription: "Les alertes confirmées apparaîtront ici lorsqu’elles seront disponibles." },
   documents: { description: "Documents disponibles dans les espaces GES autorisés.", filters: ["Tous les types"], columns: ["DOCUMENT", "CATÉGORIE", "LIÉ À", "MODIFIÉ LE", "ÉTAT"], empty: "Données documentaires indisponibles" },
   support: { description: "Demandes d’assistance GES disponibles.", title: "Liste des tickets", toolbarTitle: true, searchPlaceholder: "Rechercher un ticket…", filters: ["Tous les statuts", "Toutes les catégories", "Toutes les priorités"], columns: ["Sujet", "Membre", "Catégorie", "Priorité", "Statut", "Dernière mise à jour", "Actions"], empty: "Aucun ticket à afficher", emptyDescription: "Les demandes d’assistance apparaîtront ici lorsqu’elles seront disponibles." },
@@ -99,12 +101,15 @@ if (sectionKey === "rapports") return <>
 function GenericTable({ sectionKey, page, query, onQueryChange, activeTab, setActiveTab }: { sectionKey: string; page: ModulePage; query: string; onQueryChange: (value: string) => void; activeTab: number; setActiveTab: (value: number) => void }) {
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
   const optionsFor = (filter: string) => {
-    if (filter.toLowerCase().includes("période")) return [filter, "Aujourd’hui", "7 jours", "30 jours"];
-    if (filter.toLowerCase().includes("type")) return [filter, "Dépôt", "Retrait", "Souscription", "Remboursement"];
-    if (filter.toLowerCase().includes("statut")) return [filter, "En attente", "Confirmé", "Rejeté"];
-    if (filter.toLowerCase().includes("sévérité")) return [filter, "Faible", "Moyenne", "Élevée", "Critique"];
-    if (filter.toLowerCase().includes("priorité")) return [filter, "Basse", "Normale", "Haute", "Urgente"];
-    if (filter.toLowerCase().includes("kyc")) return [filter, "À vérifier", "Vérifié", "Refusé"];
+    const normalized = filter.toLowerCase();
+    if (normalized.includes("priorit")) return [filter, "Faible", "Normale", "Haute", "Urgente"];
+    if (normalized.includes("mode")) return [filter, "Verification identite", "Revue manuelle"];
+    if (normalized.includes("etape")) return [filter, "Premiere revue", "Seconde revue"];
+    if (normalized.includes("periode") || normalized.includes("period")) return [filter, "Aujourd hui", "7 jours", "30 jours"];
+    if (normalized.includes("type")) return [filter, "Depot", "Retrait", "Souscription", "Remboursement"];
+    if (normalized.includes("statut") || normalized.includes("status")) return [filter, "En attente", "Confirme", "Rejete"];
+    if (normalized.includes("severit") || normalized.includes("severity")) return [filter, "Faible", "Moyenne", "Haute", "Critique"];
+    if (normalized.includes("kyc")) return [filter, "A verifier", "Verifie", "Refuse"];
     return [filter, "Actif", "Inactif"];
   };
   const hasActiveFilter = Object.entries(selectedFilters).some(([filter, value]) => value && value !== filter);
