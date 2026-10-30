@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 function Unavailable({ title, description = "Données indisponibles sans enregistrement réel." }: { title: string; description?: string }) {
   return <section className="panel detail-data-card"><div className="detail-data-icon"><Image src="/assets/icons/document.webp" alt="" width={18} height={18}/></div><h2>{title}</h2><p>{description}</p></section>;
@@ -10,12 +11,12 @@ function BackLink({ href, label }: { href: string; label: string }) {
 }
 
 export function DetailWorkspace({ sectionKey }: { sectionKey: string }) {
+  const [memberTab, setMemberTab] = useState("Vue d’ensemble");
   if (sectionKey === "membres/dossier") return <>
     <BackLink href="/admin/membres" label="Retour aux membres"/>
     <Unavailable title="Données de membre indisponibles" description="Les informations du membre apparaîtront après sélection d’un dossier autorisé."/>
-    <div className="module-tabs detail-tabs">{["Vue d’ensemble", "Investissements", "Transactions", "Contrats", "Sécurité", "Documents", "Assistance"].map((tab, index) => <button className={index === 0 ? "selected" : ""} key={tab}>{tab}</button>)}</div>
-    <section className="panel module-subpanel"><h2>Portefeuille</h2><div className="module-two-panels member-portfolio"><InitialBalance label="HTG"/><Unavailable title="Données indisponibles en USD"/></div></section>
-    <section className="panel module-subpanel"><h2>Activité récente</h2><Unavailable title="Données d’activité indisponibles"/></section>
+    <div className="module-tabs detail-tabs" role="tablist" aria-label="Rubriques du dossier membre">{["Vue d’ensemble", "Investissements", "Transactions", "Contrats", "Sécurité", "Documents", "Assistance"].map((tab) => <button type="button" role="tab" aria-selected={memberTab === tab} className={memberTab === tab ? "selected" : ""} key={tab} onClick={() => setMemberTab(tab)}>{tab}</button>)}</div>
+    <section className="panel module-subpanel" role="tabpanel"><h2>{memberTab}</h2>{memberTab === "Vue d’ensemble" ? <><div className="module-two-panels member-portfolio"><InitialBalance label="HTG"/><Unavailable title="Données indisponibles en USD"/></div><Unavailable title="Données d’activité indisponibles"/></> : <Unavailable title={`Données ${memberTab.toLowerCase()} indisponibles`} description={`Aucune information de ${memberTab.toLowerCase()} n’est disponible sans dossier membre autorisé.`}/>}</section>
   </>;
   if (sectionKey === "kyc/dossier") return <>
     <BackLink href="/admin/kyc" label="Retour à la file KYC"/>
