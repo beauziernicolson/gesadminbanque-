@@ -328,5 +328,5 @@ Les images générées et auditées sont conservées comme références de trava
 - **Données :** aucune transaction, personne, date, somme ou ligne fictive.
 
 
-Mise à jour du 30 octobre 2026 : MF-03 v2 et MF-15 v3 ajoutés en WebP avec leurs sources PNG, sans écraser les références précédentes. Ces versions restent proposées et ne remplacent pas le Master Shell verrouillé. MF-03 affiche les montants à 0 HTG et un état vide; MF-15 conserve les paramètres à zéro et le nouvel accordéon de prise d’effet. Revue d’intégration visuelle encore requise.
+Mise à jour du 30 octobre 2026 : MF-03 v2 et MF-15 v3 ajoutés en WebP depuis des PNG conservés dans les fichiers de travail locaux, sans écraser les références précédentes. Ces versions restent proposées et ne remplacent pas le Master Shell verrouillé. MF-03 affiche les montants à 0 HTG et un état vide; MF-15 conserve les paramètres à zéro et le nouvel accordéon de prise d’effet. Revue d’intégration visuelle encore requise.
 
