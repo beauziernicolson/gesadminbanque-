@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
-export function LoginForm() {
+export function LoginForm({ localPreviewEnabled }: { localPreviewEnabled: boolean }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +15,12 @@ export function LoginForm() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [stage, setStage] = useState<"credentials" | "mfa">("credentials");
+
+  function enterLocalPreview() {
+    if (!localPreviewEnabled || busy || stage !== "credentials") return;
+    router.replace("/admin/vue-generale");
+    router.refresh();
+  }
 
   async function submitCredentials(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -102,6 +108,7 @@ export function LoginForm() {
       <label>Adresse courriel<input type="email" autoComplete="username" required value={email} onChange={(event) => setEmail(event.target.value)} /></label>
       <label>Mot de passe<input type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} /></label>
       <button className="gate-button" disabled={busy}>{busy ? "Vérification…" : "Se connecter"}</button>
+      {localPreviewEnabled && <button type="button" className="auth-back" disabled={busy} onClick={enterLocalPreview}>Passer en aperçu local</button>}
     </form> : <form className="auth-form" onSubmit={submitCode}>
       <label>Code d’authentification<input inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6} required value={code} onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 6))} /></label>
       <button className="gate-button" disabled={busy}>{busy ? "Vérification…" : "Vérifier le code"}</button>
