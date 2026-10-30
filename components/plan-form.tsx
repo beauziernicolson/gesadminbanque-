@@ -48,6 +48,14 @@ export function PlanForm() {
         <label className="plan-full-width">Conditions du contrat<textarea placeholder="Aucune information sur le modèle de contrat"/></label>
       </div>
     </details>
+    <details className="panel plan-advanced-section">
+      <summary>Version et prise d’effet</summary>
+      <p>Les conditions approuvées doivent être versionnées pour préserver les modalités déjà associées aux contrats.</p>
+      <div className="plan-fields">
+        <label>Date et heure de prise d’effet<input type="datetime-local"/></label>
+      </div>
+      <div className="plan-inline-empty">Aucun historique de version disponible. Cette date reste dans l’aperçu et n’est pas enregistrée.</div>
+    </details>
     <details className="panel plan-advanced-section plan-preview-section">
       <summary>Aperçu et publication</summary>
       <p>Les termes saisis ne sont ni enregistrés ni publiés.</p>
