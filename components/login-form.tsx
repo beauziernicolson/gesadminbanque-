@@ -108,7 +108,7 @@ export function LoginForm({ localPreviewEnabled }: { localPreviewEnabled: boolea
       <label>Adresse courriel<input type="email" autoComplete="username" required value={email} onChange={(event) => setEmail(event.target.value)} /></label>
       <label>Mot de passe<input type="password" autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} /></label>
       <button className="gate-button" disabled={busy}>{busy ? "Vérification…" : "Se connecter"}</button>
-      {localPreviewEnabled && <button type="button" className="auth-back" disabled={busy} onClick={enterLocalPreview}>Passer en aperçu local</button>}
+      {localPreviewEnabled && <button type="button" className="auth-back" disabled={busy} onClick={enterLocalPreview}>Passer en aperçu de démonstration</button>}
     </form> : <form className="auth-form" onSubmit={submitCode}>
       <label>Code d’authentification<input inputMode="numeric" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6} required value={code} onChange={(event) => setCode(event.target.value.replace(/\D/g, "").slice(0, 6))} /></label>
       <button className="gate-button" disabled={busy}>{busy ? "Vérification…" : "Vérifier le code"}</button>

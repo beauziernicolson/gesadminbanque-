@@ -78,8 +78,10 @@ export async function checkAdminAccess(): Promise<AccessResult> {
 }
 
 export function isLocalDesignPreview() {
-  return (
-    process.env.NODE_ENV !== "production" &&
-    process.env.NEXT_PUBLIC_GES_PREVIEW_MODE === "true"
-  );
+  const previewEnabled = process.env.GES_ADMIN_DEMO_MODE === "true";
+  const localPreview = process.env.NODE_ENV !== "production";
+  const protectedVercelProduction =
+    process.env.VERCEL === "1" && process.env.VERCEL_ENV === "production";
+
+  return previewEnabled && (localPreview || protectedVercelProduction);
 }
